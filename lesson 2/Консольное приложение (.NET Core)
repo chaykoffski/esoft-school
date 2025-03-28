@@ -1,0 +1,40 @@
+   using System;
+   using System.Collections.Generic;
+
+   class Program
+   {
+       static void Main(string[] args)
+       {
+           string input = Console.ReadLine();
+           Console.WriteLine(IsValid(input));
+       }
+
+       public static bool IsValid(string s)
+       {
+           Stack<char> stack = new Stack<char>();
+           Dictionary<char, char> brackets = new Dictionary<char, char>
+           {
+               { ')', '(' },
+               { ']', '[' },
+               { '}', '{' }
+           };
+
+           foreach (char c in s)
+           {
+               if (brackets.ContainsValue(c))
+               {
+                   stack.Push(c);
+               }
+               else if (brackets.ContainsKey(c))
+               {
+                   if (stack.Count == 0 || stack.Pop() != brackets[c])
+                   {
+                       return false;
+                   }
+               }
+           }
+
+           return stack.Count == 0;
+       }
+   }
+   
